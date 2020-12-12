@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 12/12/2020 às 02:10
+-- Tempo de geração: 12/12/2020 às 17:25
 -- Versão do servidor: 10.4.13-MariaDB
 -- Versão do PHP: 7.4.8
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `music_sytem`
 --
-CREATE DATABASE IF NOT EXISTS `music_sytem` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `music_sytem`;
 
 -- --------------------------------------------------------
 
@@ -29,9 +27,9 @@ USE `music_sytem`;
 -- Estrutura para tabela `album`
 --
 
-DROP TABLE IF EXISTS `album`;
 CREATE TABLE `album` (
   `id` int(11) NOT NULL,
+  `artist_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -45,7 +43,6 @@ CREATE TABLE `album` (
 -- Estrutura para tabela `artist`
 --
 
-DROP TABLE IF EXISTS `artist`;
 CREATE TABLE `artist` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -61,7 +58,6 @@ CREATE TABLE `artist` (
 -- Estrutura para tabela `favorite_music`
 --
 
-DROP TABLE IF EXISTS `favorite_music`;
 CREATE TABLE `favorite_music` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -74,7 +70,6 @@ CREATE TABLE `favorite_music` (
 -- Estrutura para tabela `music`
 --
 
-DROP TABLE IF EXISTS `music`;
 CREATE TABLE `music` (
   `id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL,
@@ -93,7 +88,6 @@ CREATE TABLE `music` (
 -- Estrutura para tabela `playlist`
 --
 
-DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -110,7 +104,6 @@ CREATE TABLE `playlist` (
 -- Estrutura para tabela `playlist_music`
 --
 
-DROP TABLE IF EXISTS `playlist_music`;
 CREATE TABLE `playlist_music` (
   `id` int(11) NOT NULL,
   `playlist_id` int(11) NOT NULL,
@@ -123,7 +116,6 @@ CREATE TABLE `playlist_music` (
 -- Estrutura para tabela `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -144,7 +136,8 @@ CREATE TABLE `user` (
 -- Índices de tabela `album`
 --
 ALTER TABLE `album`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `artist_id` (`artist_id`);
 
 --
 -- Índices de tabela `artist`
@@ -157,6 +150,7 @@ ALTER TABLE `artist`
 --
 ALTER TABLE `favorite_music`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_music` (`user_id`,`music_id`) USING BTREE,
   ADD KEY `user_id` (`user_id`,`music_id`),
   ADD KEY `music_id` (`music_id`);
 
@@ -180,8 +174,9 @@ ALTER TABLE `playlist`
 --
 ALTER TABLE `playlist_music`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `playlist_id` (`playlist_id`,`music_id`),
-  ADD KEY `music_id` (`music_id`);
+  ADD UNIQUE KEY `playlist_music` (`playlist_id`,`music_id`) USING BTREE,
+  ADD KEY `music_id` (`music_id`),
+  ADD KEY `playlist_id` (`playlist_id`);
 
 --
 -- Índices de tabela `user`
@@ -240,6 +235,12 @@ ALTER TABLE `user`
 --
 -- Restrições para dumps de tabelas
 --
+
+--
+-- Restrições para tabelas `album`
+--
+ALTER TABLE `album`
+  ADD CONSTRAINT `album_ibfk_1` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Restrições para tabelas `favorite_music`
