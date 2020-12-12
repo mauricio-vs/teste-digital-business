@@ -199,13 +199,17 @@
             padding-left: 6em !important;
             background-color: #B4D4F4 !important;
         }
+        article {
+            padding: 1em 2em;
+            margin-bottom: 1em;
+        }
     </style>
     <link rel="icon" href="favicon.ico">
 </head>
 <body>
     <main class="container">
         <h1>Teste da empresa Digital Business</h1>
-        <article>
+        <article  class="z-depth-1">
             <h3>Método __invoke</h3>
             <p>O método mágico _invoke do PHP, ao ser adicionado na declaração de uma classe, permite com que uma instância da mesma possa ser executada como um método.</p>
             <?php
@@ -215,7 +219,7 @@
                 $normalClassObject->normalMethod();
             ?>
         </article>
-        <article>
+        <article  class="z-depth-1">
             <h3>Trait</h3>
             <p>Traits são utilizadas para reuso de código, quando não deve-se utilizar o uso de herança através de classes, caso o programador utilize os conceitos de POO corretamente. Por exemplo, no conceito básico de POO, um animal e um carro não podem herdar de uma mesma classe pai, pois não são do mesmo tipo. Mesmo que o PHP permita criar um classe pai com o método toUpper e fazer com que as classes Animal e Car herdem da mesma para utilizar o método, esta não é a utilização correta do conceito de orientação a objetos.</p>
             <?php
@@ -225,7 +229,7 @@
                 $car->toUpper();
             ?>
         </article>
-        <article>
+        <article  class="z-depth-1">
             <h3>Métodos de requisição HTTP</h3>
             <P>Os métodos de requisição HTTP são utuilizados por todos os sistemas WEB e atualmente uma API REST baseia-se nesses métodos.</P>
             <h5>GET</h5>
@@ -239,13 +243,13 @@
             <h5>PATCH</h5>
             <p>Utilizado para atualizar informações no servidor. Este método sobrescreve parcialmente informações de um objeto. Por exemplo: Atualizar apenas o nome de um usuário.</p>
         </article>
-        <article>
+        <article  class="z-depth-1">
             <h3>Função anônima</h3>
             <?php
                 $anonymousFunction($array_itens);
             ?>
         </article>
-        <article>
+        <article  class="z-depth-1">
             <h3>Modelagem de dados Streaming de música</h3>
             <a href="music_system.sql" download>Arquivo SQL</a>
             <p>Query para listagem das músicas de uma playlist com o total de músicas:</p>
@@ -260,7 +264,7 @@
                 FROM playlist_music 
                 WHERE playlist_music.playlist_id = (PLAYLIST_ID)
             </pre>
-            <p>* Eu daria um count em PHP no resultado da query para pegar o resultado. Na minha opinião, seria mais correto.</p>
+            <p>* Acredito que um count em PHP no resultado da query, na minha opinião, seria mais correto.</p>
         </article>
     </main>
 </body>
